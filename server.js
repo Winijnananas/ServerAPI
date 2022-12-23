@@ -9,11 +9,12 @@ const SECRET = process.env.SECRET;
 
 // import usersschema
 const Users = require('./schemas/Users');
+const Movie = require('./schemas/movie');
 //import movies schema
 // const Movies = require('./schemas/Movies');
 
-
-mongoose.connect('mongodb+srv://admin:oam0942217092@mobilecluster.xug0att.mongodb.net/MYAPP_DATA', {
+//mongoose.connect('mongodb+srv://admin:oam0942217092@mobilecluster.xug0att.mongodb.net/MYAPP_DATA'
+mongoose.connect('mongodb+srv://admin:oam0942217092@mobilecluster.xug0att.mongodb.net/test', {
   useNewUrlParser: true
 });
 
@@ -67,13 +68,20 @@ app.post('/users', async (req, res) => {
   });
 
   //api movie
+  app.get('/movies', async (req, res) => {
+    const movie = await Movie.find({});
+    res.json(movie);
+  });
 
-  app.get('/profile', async (req, res) => {
+
+
+
+  app.get('/users/me', async (req, res) => {
     try{
       const token = req.headers.authorization.split(' ')[1];
       var iss = jwt.verify(token, SECRET).iss;
-      const userprofile = await Users.findOne({_id: iss});
-      res.json({status: 200, userprofile});
+      const user = await Users.findOne({_id: iss});
+      res.json({status: 200, user});
     } catch(error) {
       res.json({status: 204, message: 'invalid token'});
     }
