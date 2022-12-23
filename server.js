@@ -3,12 +3,17 @@ const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
 const md5 = require('md5');
+const jwt = require('jsonwebtoken');
+const SECRET = process.env.SECRET;
 
-// import schema
+
+// import usersschema
 const Users = require('./schemas/Users');
-//changedata
-//mongoose.connect('mongodb+srv://admin:oam0942217092@mobilecluster.xug0att.mongodb.net/test'
-mongoose.connect('mongodb+srv://admin:oam0942217092@mobilecluster.xug0att.mongodb.net/DBApp', {
+//import movies schema
+// const Movies = require('./schemas/Movies');
+
+
+mongoose.connect('mongodb+srv://admin:oam0942217092@mobilecluster.xug0att.mongodb.net/MYAPP_DATA', {
   useNewUrlParser: true
 });
 
@@ -24,7 +29,7 @@ app.use(function(req, res, next) {
 
 // สร้าง database schema
 
-// create user
+//api register create user
 app.post('/users', async (req, res) => {
     try {
       const payload = req.body;
@@ -43,6 +48,40 @@ app.post('/users', async (req, res) => {
       console.log(error.message);
     }
   });
+
+  //api login
+  app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+    const user = await Users.findOne({username:username, password: md5(password)})
+
+    if(!!user){
+      var token = jwt.sign({
+        iss:user._id,
+        username:user.username,
+      }, "MYAPP");
+    
+      res.json({ status: 'ok', message: 'login success',token });
+    } else {
+      res.json({status:'error',message:'User not found'});
+    }
+  });
+
+  //api movie
+
+  app.get('/profile', async (req, res) => {
+    try{
+      const token = req.headers.authorization.split(' ')[1];
+      var iss = jwt.verify(token, SECRET).iss;
+      const userprofile = await Users.findOne({_id: iss});
+      res.json({status: 200, userprofile});
+    } catch(error) {
+      res.json({status: 204, message: 'invalid token'});
+    }
+  });
+ 
+ 
+
+
   const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`your server is running in http://localhost:${PORT}`);
