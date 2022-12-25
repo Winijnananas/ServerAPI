@@ -10,6 +10,7 @@ const SECRET = process.env.SECRET;
 // import usersschema
 const Users = require('./schemas/Users');
 const Movie = require('./schemas/movie');
+const Popular = require('./schemas/popular');
 //import movies schema
 // const Movies = require('./schemas/Movies');
 
@@ -71,6 +72,12 @@ app.post('/users', async (req, res) => {
   app.get('/movies', async (req, res) => {
     const movie = await Movie.find({});
     res.json(movie);
+  });
+  
+  //api moviepopulars
+  app.get('/populars', async (req, res) => {
+    const populars = await Popular.find({});
+    res.json(populars);
   });
 
 
