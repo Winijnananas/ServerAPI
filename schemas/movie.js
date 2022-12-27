@@ -5,12 +5,18 @@ const movieSchema = new Schema({
     url:String,
     id:String,
     title:String,
-    type:String,
+    sectitle:String,
+    year:String,
+    time:String,
+    type:[String],
     rate:String,
     desc:String,
     sumlabel:String,
     nameactor:[String],
-    produce:String,
+    produce:[String],
+    like:String,
+    urltrailer:String,
+    showurl:String,
 
 
 

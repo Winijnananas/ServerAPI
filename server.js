@@ -86,11 +86,11 @@ app.post('/users', async (req, res) => {
   app.get('/users/me', async (req, res) => {
     try{
       const token = req.headers.authorization.split(' ')[1];
-      var iss = jwt.verify(token, SECRET).iss;
+      var iss = jwt.verify(token, "MYAPP").iss;
       const user = await Users.findOne({_id: iss});
       res.json({status: 200, user});
     } catch(error) {
-      res.json({status: 204, message: 'invalid token'});
+      res.json({status: 204, error});
     }
   });
  
@@ -102,3 +102,10 @@ app.listen(PORT, () => {
   console.log(`your server is running in http://localhost:${PORT}`);
 });
 
+ process.on('unhandledRejection',err=>{
+    console.log(`ERROR: ${err.message}`);
+    console.log(`Shutting down the server `);
+    server.close(()=>{
+      process.exit(1)
+    })
+ })

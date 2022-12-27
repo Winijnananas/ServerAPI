@@ -6,7 +6,7 @@ const usersSchema = new Schema({
   username: String,
   email: String,
   password: String,
- 
+  favorite:[String],
 
 
 
