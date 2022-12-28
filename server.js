@@ -8,9 +8,15 @@ const SECRET = process.env.SECRET;
 
 
 // import usersschema
+//const Favorite = require('./schemas/favorite');
 const Users = require('./schemas/Users');
 const Movie = require('./schemas/movie');
 const Popular = require('./schemas/popular');
+const Action = require('./schemas/action');
+const Comedy = require('./schemas/comedy');
+const Fantasy = require('./schemas/fantasy');
+const Romatic = require('./schemas/romantic');
+
 //import movies schema
 // const Movies = require('./schemas/Movies');
 
@@ -80,9 +86,35 @@ app.post('/users', async (req, res) => {
     res.json(populars);
   });
 
+//api comedy
+  app.get('/comedy', async (req, res) => {
+    const comedey = await Comedy.find({});
+    res.json(comedey);
+  });
+
+  //api fantasy
+  app.get('/fantasy', async (req, res) => {
+    const fantasy = await Fantasy.find({});
+    res.json(fantasy);
+  });
+
+
+  //api romantic
+  app.get('/romatic', async (req, res) => {
+    const romantic = await Romatic.find({});
+    res.json(romantic);
+  });
+
+  //apiAction
+  app.get('/action', async (req, res) => {
+    const action = await Action.find({});
+    res.json(action);
+  });
 
 
 
+
+//get profile
   app.get('/users/me', async (req, res) => {
     try{
       const token = req.headers.authorization.split(' ')[1];
@@ -94,7 +126,30 @@ app.post('/users', async (req, res) => {
     }
   });
  
- 
+ //getfavorite
+//  app.get('/users/fav', async (req, res) => {
+//   try{
+//     const token = req.headers.authorization.split(' ')[1];
+//     var iss = jwt.verify(token, "MYAPP").iss;
+//     const user = await user.findOne({_id: iss});
+//     res.json({status: 200, user});
+//   } catch(error) {
+//     res.json({status: 204, error});
+//   }
+// });
+
+app.get('/api/Model', (req, res) => {
+  // Use the MongoClient to retrieve data from the database
+  const collection = client.db('MYAPP').collection('your-collection-name');
+  collection.find({}).toArray((err, result) => {
+    if (err) {
+      console.error(err);
+      return res.sendStatus(500);
+    }
+    res.send(result);
+  });
+});
+
 
 
   const PORT = 3000;

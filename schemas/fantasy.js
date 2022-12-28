@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const movieSchema = new Schema({
+const fantasySchema = new Schema({
     url:String,
     id:String,
     title:String,
@@ -25,6 +25,6 @@ const movieSchema = new Schema({
 
 }, { timestamps: true, versionKey: false });
 
-const MoviesModel = mongoose.model('Movies', movieSchema);
+const fantasyModel = mongoose.model('Fantasy', fantasySchema);
 
-module.exports = MoviesModel;
+module.exports = fantasyModel;
