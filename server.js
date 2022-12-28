@@ -12,7 +12,6 @@ const SECRET = process.env.SECRET;
 const Users = require('./schemas/Users');
 const Movie = require('./schemas/movie');
 const Popular = require('./schemas/popular');
-const Action = require('./schemas/action');
 const Comedy = require('./schemas/comedy');
 const Fantasy = require('./schemas/fantasy');
 const Romatic = require('./schemas/romantic');
