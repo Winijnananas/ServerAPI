@@ -105,11 +105,6 @@ app.post('/users', async (req, res) => {
     res.json(romantic);
   });
 
-  //apiAction
-  app.get('/action', async (req, res) => {
-    const action = await Action.find({});
-    res.json(action);
-  });
 
 
 
@@ -126,29 +121,9 @@ app.post('/users', async (req, res) => {
     }
   });
  
- //getfavorite
-//  app.get('/users/fav', async (req, res) => {
-//   try{
-//     const token = req.headers.authorization.split(' ')[1];
-//     var iss = jwt.verify(token, "MYAPP").iss;
-//     const user = await user.findOne({_id: iss});
-//     res.json({status: 200, user});
-//   } catch(error) {
-//     res.json({status: 204, error});
-//   }
-// });
 
-app.get('/api/Model', (req, res) => {
-  // Use the MongoClient to retrieve data from the database
-  const collection = client.db('MYAPP').collection('your-collection-name');
-  collection.find({}).toArray((err, result) => {
-    if (err) {
-      console.error(err);
-      return res.sendStatus(500);
-    }
-    res.send(result);
-  });
-});
+
+
 
 
 
